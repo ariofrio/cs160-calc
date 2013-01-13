@@ -3,3 +3,7 @@
 *.o
 lex.yy.*
 y.tab.*
+test.*.defoutput
+test.*.tokens
+test.*.dot
+test.*.png
