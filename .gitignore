@@ -7,3 +7,4 @@ test.*.defoutput
 test.*.tokens
 test.*.dot
 test.*.png
+/tags
