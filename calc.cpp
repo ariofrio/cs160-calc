@@ -453,6 +453,7 @@ int main(int argc, char* argv[])
       printf("%s\n", token_to_string(tok));
     } else {
       cout << "Usage: " << argv[0] << " [-s]" << endl;
+      exit(1);
     }
   }
   else {
