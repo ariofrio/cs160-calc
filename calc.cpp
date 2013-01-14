@@ -440,19 +440,22 @@ void parser_t::List()
 
 int main(int argc, char* argv[])
 {
-	// just scanner
-	if (strcmp(argv[1], "-s") == 0) {
-		scanner_t scanner;
-		token_type tok = scanner.next_token();
-		while(tok != T_eof){
-			scanner.eat_token(tok);
-			printf("%s", token_to_string(tok));
-			tok = scanner.next_token();
-		}
-		printf("%s\n", token_to_string(tok));
-	}
-
-	parser_t parser;
-	parser.parse();
-	return 0;
+  // just scanner
+  if (argc > 1) {
+    if (strcmp(argv[1], "-s") == 0) {
+      scanner_t scanner;
+      token_type tok = scanner.next_token();
+      while(tok != T_eof){
+        scanner.eat_token(tok);
+        printf("%s", token_to_string(tok));
+        tok = scanner.next_token();
+      }
+      printf("%s\n", token_to_string(tok));
+    }
+  }
+  else {
+    parser_t parser;
+    parser.parse();
+  }
+  return 0;
 }
