@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <string.h>
 #include <ctype.h>
+#include <iostream>
 #include <stack>
 
 using namespace std;
@@ -105,31 +106,60 @@ class scanner_t {
 
   private:
 
-	// WRITEME: Figure out what you will need to write the scanner
-	// and to implement the above interface. It does not have to
-	// be a state machine or anything fancy, it's pretty straightforward.
-	// Just read in the characters one at a time from input (getchar would
-	// be a good way) and group them into tokens. All of the tokens in
-	// this calculator are trivial except for the numbers,
-	// so it should not be that bad
+  bool peek_token_available = false;
+  token_type peek_token;
 
-	// This is a bogus member for implementing a useful stub, it should
-	// be cut out once you get the scanner up and going.
-	token_type bogo_token;
+  int line_no = 1;
+
 	void scan_error(char x);
-	// error message and exit for mismatch
-	void mismatch_error(token_type c);
+	void mismatch_error(token_type c); // error message and exit for mismatch
 
 };
 
-token_type scanner_t::next_token()
-{
-	// WRITEME: replace this bogus junk with code that will take a peek
-	// at the next token and return it to the parser.  It should _not_
-	// actually consume a token - you should be able to call next_token()
-	// multiple times without actually reading any more tokens in
-	if ( bogo_token!=T_plus && bogo_token!=T_eof ) return T_plus;
-	else return bogo_token;
+token_type scanner_t::next_token() {
+  if(peek_token_available) return peek_token;
+
+  int c = cin.get();
+  switch(c) {
+    case '\n': line_no++; return next_token(); break;
+    case ' ' : return next_token(); break;
+    case '\t': return next_token(); break;
+
+    case EOF: peek_token = T_eof; break;
+    case '+': peek_token = T_plus; break;
+    case '-': peek_token = T_minus; break;
+    case '*': peek_token = T_times; break;
+    case '/': peek_token = T_div; break;
+    case '<': peek_token = T_lt; break;
+    case '>': peek_token = T_gt; break;
+    case '=': peek_token = T_eq; break;
+    case ';': peek_token = T_semicolon; break;
+    case '(': peek_token = T_openparen; break;
+    case ')': peek_token = T_closeparen; break;
+
+    default:
+      // long won't overflow when checking if number fits in 32 bits
+      long number = c - '0';
+      long coefficient = 10;
+      if(c >= '0' && c <= '9') {
+        peek_token = T_num;
+        while(true) {
+          int c = cin.get();
+          if(!(c >= '0' && c <= '9')) break;
+
+          number += coefficient * (c - '0');
+          coefficient *= 10;
+
+          if(number > 2147483647) scan_error(c);
+        }
+        cin.unget(); // put back unused character
+      } else {
+        scan_error(c);
+      }
+      break;
+  }
+  peek_token_available = true;
+  return peek_token;
 }
 
 void scanner_t::eat_token(token_type c)
@@ -137,21 +167,16 @@ void scanner_t::eat_token(token_type c)
 	// if we are supposed to eat token c, and it does not match
 	// what we are supposed to be reading from file, then it is a
 	// mismatch error ( call - mismatch_error(c) )
+  if(c != next_token()) mismatch_error(c);
 
-	// WRITEME: cut this bogus stuff out and implement eat_token
-	if ( rand()%10 < 8 ) bogo_token = T_plus;
-	else bogo_token = T_eof;
-
+  peek_token_available = false;
 }
 
-scanner_t::scanner_t()
-{
-	// WRITEME
-}
+scanner_t::scanner_t() {}
 
 int scanner_t::get_line()
 {
-	// WRITEME
+  return line_no;
 }
 
 void scanner_t::scan_error (char x)

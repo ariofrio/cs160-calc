@@ -2,6 +2,7 @@ YACC	= bison -d -y
 LEX	= flex
 CC	= gcc
 CPP	= g++
+CPPFLAGS=-std=gnu++11
 DEFTARGET = calc_def
 
 all: calc_def calc  
@@ -20,9 +21,9 @@ test_parse: calc
 #
 
 calc: calc.o 
-	    $(CPP) calc.o -o calc
+	    $(CPP) $(CPPFLAGS) calc.o -o calc
 calc.o: calc.cpp 
-	    $(CPP) -c calc.cpp
+	    $(CPP) $(CPPFLAGS) -c calc.cpp
 
 ################################################
 # This part makes the parsing definition
