@@ -451,6 +451,8 @@ int main(int argc, char* argv[])
         tok = scanner.next_token();
       }
       printf("%s\n", token_to_string(tok));
+    } else {
+      cout << "Usage: " << argv[0] << " [-s]" << endl;
     }
   }
   else {
