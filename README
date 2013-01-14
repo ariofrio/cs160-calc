@@ -1,6 +1,7 @@
 ## Changelog
 
- - **Scanner implemented**: Jan 13
+**Scanner implemented**: Jan 13
+
    - Add `-std=gnu++11` flag to Makefile for better code
    - `next_token()` only fetches another token when `peek_token_available` is
      false, storing the token in `peek_token` and setting
@@ -12,7 +13,8 @@
      `cin.unget()`.
    - `get_line()` returns the member `line_no` which is incremented every time
      a new line character is found.
- - Updated main function per email from baki: Jan 13
+
+Updated main function per email from baki: Jan 13
 
 TODO: Summarize more commits here.
 
