@@ -15,18 +15,18 @@ using namespace std;
 
 //all of the terminals in the language
 typedef enum {
-	T_eof = 0,		// 0: end of file
-	T_num,			// 1: numbers
-	T_plus,			// 2: +
-	T_minus,		// 3: -
-	T_times,		// 4: *
-    T_div,      	// 5: /
-    T_lt,			// 6: <
-	T_gt,			// 7: >
-	T_eq, 			// 8: =
-	T_semicolon,	// 9: ;
-	T_openparen,	// 10: (
-	T_closeparen 	// 11: )
+  T_eof = 0,   // 0: end of file
+  T_num,       // 1: numbers
+  T_plus,      // 2: +
+  T_minus,     // 3: -
+  T_times,     // 4: *
+  T_div,       // 5: /
+  T_lt,        // 6: <
+  T_gt,        // 7: >
+  T_eq,        // 8: =
+  T_semicolon, // 9: ;
+  T_openparen, // 10: (
+  T_closeparen // 11: )
 } token_type;
 
 // This function returns a string for the token. It is used in the parsetree_t
@@ -37,23 +37,23 @@ typedef enum {
 //
 // No need to do anything here
 char* token_to_string(token_type c) {
-	static char buffer[MAX_SYMBOL_NAME_SIZE];
-	switch( c ) {
-		case T_eof: strncpy(buffer,"eof",MAX_SYMBOL_NAME_SIZE); break;
-		case T_num: strncpy(buffer,"num",MAX_SYMBOL_NAME_SIZE); break;
-		case T_plus: strncpy(buffer,"+",MAX_SYMBOL_NAME_SIZE); break;
-		case T_minus: strncpy(buffer,"-",MAX_SYMBOL_NAME_SIZE); break;
-		case T_times: strncpy(buffer,"*",MAX_SYMBOL_NAME_SIZE); break;
-		case T_div: strncpy(buffer,"/",MAX_SYMBOL_NAME_SIZE); break;
-		case T_lt: strncpy(buffer,"<",MAX_SYMBOL_NAME_SIZE); break;
-		case T_gt: strncpy(buffer,">",MAX_SYMBOL_NAME_SIZE); break;
-		case T_eq: strncpy(buffer,"=",MAX_SYMBOL_NAME_SIZE); break;
-		case T_semicolon: strncpy(buffer,";",MAX_SYMBOL_NAME_SIZE); break;
-		case T_openparen: strncpy(buffer,"(",MAX_SYMBOL_NAME_SIZE); break;
-		case T_closeparen: strncpy(buffer,")",MAX_SYMBOL_NAME_SIZE); break;
-		default: strncpy(buffer,"unknown_token",MAX_SYMBOL_NAME_SIZE); break;
-	}
-	return buffer;
+  static char buffer[MAX_SYMBOL_NAME_SIZE];
+  switch( c ) {
+    case T_eof: strncpy(buffer,"eof",MAX_SYMBOL_NAME_SIZE); break;
+    case T_num: strncpy(buffer,"num",MAX_SYMBOL_NAME_SIZE); break;
+    case T_plus: strncpy(buffer,"+",MAX_SYMBOL_NAME_SIZE); break;
+    case T_minus: strncpy(buffer,"-",MAX_SYMBOL_NAME_SIZE); break;
+    case T_times: strncpy(buffer,"*",MAX_SYMBOL_NAME_SIZE); break;
+    case T_div: strncpy(buffer,"/",MAX_SYMBOL_NAME_SIZE); break;
+    case T_lt: strncpy(buffer,"<",MAX_SYMBOL_NAME_SIZE); break;
+    case T_gt: strncpy(buffer,">",MAX_SYMBOL_NAME_SIZE); break;
+    case T_eq: strncpy(buffer,"=",MAX_SYMBOL_NAME_SIZE); break;
+    case T_semicolon: strncpy(buffer,";",MAX_SYMBOL_NAME_SIZE); break;
+    case T_openparen: strncpy(buffer,"(",MAX_SYMBOL_NAME_SIZE); break;
+    case T_closeparen: strncpy(buffer,")",MAX_SYMBOL_NAME_SIZE); break;
+    default: strncpy(buffer,"unknown_token",MAX_SYMBOL_NAME_SIZE); break;
+  }
+  return buffer;
 }
 
 // All of the non-terminals in the grammar. You need to add these in
@@ -61,10 +61,10 @@ char* token_to_string(token_type c) {
 // please follow the convention we set up so that we can tell what the hack
 // you are doing when I grade.
 typedef enum {
-	epsilon = 100,
-	NT_List,
-	NT_Expr
-	// WRITEME: add symbolic names for your non-terminals here
+  epsilon = 100,
+  NT_List,
+  NT_Expr
+    // WRITEME: add symbolic names for your non-terminals here
 } nonterm_type;
 
 // This function returns a string for the non-terminals. It is used in the
@@ -77,14 +77,14 @@ typedef enum {
 // convention.
 char* nonterm_to_string(nonterm_type nt)
 {
-	static char buffer[MAX_SYMBOL_NAME_SIZE];
-	switch( nt ) {
-		  case epsilon: strncpy(buffer,"e",MAX_SYMBOL_NAME_SIZE); break;
-		  case NT_List: strncpy(buffer,"List",MAX_SYMBOL_NAME_SIZE); break;
-		  // WRITEME: add the other nonterminals you need here
-		  default: strncpy(buffer,"unknown_nonterm",MAX_SYMBOL_NAME_SIZE); break;
-		}
-	return buffer;
+  static char buffer[MAX_SYMBOL_NAME_SIZE];
+  switch( nt ) {
+    case epsilon: strncpy(buffer,"e",MAX_SYMBOL_NAME_SIZE); break;
+    case NT_List: strncpy(buffer,"List",MAX_SYMBOL_NAME_SIZE); break;
+                  // WRITEME: add the other nonterminals you need here
+    default: strncpy(buffer,"unknown_nonterm",MAX_SYMBOL_NAME_SIZE); break;
+  }
+  return buffer;
 }
 
 /*** Scanner Class ***********************************************/
@@ -92,27 +92,27 @@ char* nonterm_to_string(nonterm_type nt)
 class scanner_t {
   public:
 
-	// eats the next token and prints an error if it is not of type c
-	void eat_token(token_type c);
+    // eats the next token and prints an error if it is not of type c
+    void eat_token(token_type c);
 
-	// peeks at the lookahead token
-	token_type next_token();
+    // peeks at the lookahead token
+    token_type next_token();
 
-	// return line number for errors
-	int get_line();
+    // return line number for errors
+    int get_line();
 
-	// constructor - inits g_next_token
-	scanner_t();
+    // constructor - inits g_next_token
+    scanner_t();
 
   private:
 
-  bool peek_token_available = false;
-  token_type peek_token;
+    bool peek_token_available = false;
+    token_type peek_token;
 
-  int line_no = 1;
+    int line_no = 1;
 
-	void scan_error(char x);
-	void mismatch_error(token_type c); // error message and exit for mismatch
+    void scan_error(char x);
+    void mismatch_error(token_type c); // error message and exit for mismatch
 
 };
 
@@ -164,9 +164,9 @@ token_type scanner_t::next_token() {
 
 void scanner_t::eat_token(token_type c)
 {
-	// if we are supposed to eat token c, and it does not match
-	// what we are supposed to be reading from file, then it is a
-	// mismatch error ( call - mismatch_error(c) )
+  // if we are supposed to eat token c, and it does not match
+  // what we are supposed to be reading from file, then it is a
+  // mismatch error ( call - mismatch_error(c) )
   if(c != next_token()) mismatch_error(c);
 
   peek_token_available = false;
@@ -181,16 +181,16 @@ int scanner_t::get_line()
 
 void scanner_t::scan_error (char x)
 {
-	printf("scan error: unrecognized character '%c' -line %d\n",x, get_line());
-	exit(1);
+  printf("scan error: unrecognized character '%c' -line %d\n",x, get_line());
+  exit(1);
 
 }
 
 void scanner_t::mismatch_error (token_type x)
 {
-	printf("syntax error: found %s ",token_to_string(next_token()) );
-	printf("expecting %s - line %d\n", token_to_string(x), get_line());
-	exit(1);
+  printf("syntax error: found %s ",token_to_string(next_token()) );
+  printf("expecting %s - line %d\n", token_to_string(x), get_line());
+  exit(1);
 }
 
 
@@ -205,28 +205,28 @@ void scanner_t::mismatch_error (token_type x)
 // recursive decent parser so read about the interface below.
 class parsetree_t {
   public:
-	void push(token_type t);
-	void push(nonterm_type nt);
-	void pop();
-	void drawepsilon();
-	parsetree_t();
+    void push(token_type t);
+    void push(nonterm_type nt);
+    void pop();
+    void drawepsilon();
+    parsetree_t();
   private:
-	enum stype_t{
-		TERMINAL=1,
-		NONTERMINAL=0,
-		UNDEF=-1
-	};
+    enum stype_t{
+      TERMINAL=1,
+      NONTERMINAL=0,
+      UNDEF=-1
+    };
 
-	struct stuple {
-		nonterm_type nt;
-		token_type t;
-		stype_t stype;
-		int uniq;
-	};
-	void printedge(stuple temp); //prints edge from TOS->temp
-	stack<stuple> stuple_stack;
-	char* stuple_to_string(const stuple& s);
-	int counter;
+    struct stuple {
+      nonterm_type nt;
+      token_type t;
+      stype_t stype;
+      int uniq;
+    };
+    void printedge(stuple temp); //prints edge from TOS->temp
+    stack<stuple> stuple_stack;
+    char* stuple_to_string(const stuple& s);
+    int counter;
 };
 
 
@@ -234,8 +234,8 @@ class parsetree_t {
 // name all the parse tree nodes) and by printing out the necessary dot commands
 parsetree_t::parsetree_t()
 {
-	counter = 0;
-	printf("digraph G { page=\"8.5,11\"; size=\"7.5, 10\"\n");
+  counter = 0;
+  printf("digraph G { page=\"8.5,11\"; size=\"7.5, 10\"\n");
 }
 
 // This push function taken a non terminal and keeps it on the parsetree
@@ -247,45 +247,45 @@ parsetree_t::parsetree_t()
 // This particular function should be called if you are pushing a non-terminal
 void parsetree_t::push(nonterm_type nt)
 {
-	counter ++;
-	stuple temp;
-	temp.nt = nt;
-	temp.stype = NONTERMINAL;
-	temp.uniq = counter;
-	printedge( temp );
-	stuple_stack.push( temp );
+  counter ++;
+  stuple temp;
+  temp.nt = nt;
+  temp.stype = NONTERMINAL;
+  temp.uniq = counter;
+  printedge( temp );
+  stuple_stack.push( temp );
 }
 
 //same as above, but for terminals
 void parsetree_t::push(token_type t)
 {
-	counter ++;
-	stuple temp;
-	temp.t = t;
-	temp.stype = TERMINAL;
-	temp.uniq = counter;
-	printedge( temp );
-	stuple_stack.push( temp );
+  counter ++;
+  stuple temp;
+  temp.t = t;
+  temp.stype = TERMINAL;
+  temp.uniq = counter;
+  printedge( temp );
+  stuple_stack.push( temp );
 }
 
 // When you are finished parsing a symbol, pop it. That way the parsetree_t
 // will know that you are now working on a higher part of the tree.
 void parsetree_t::pop()
 {
-	if ( !stuple_stack.empty() ) {
-		stuple_stack.pop();
-	}
+  if ( !stuple_stack.empty() ) {
+    stuple_stack.pop();
+  }
 
-	if ( stuple_stack.empty() ) {
-		printf( "};\n" );
-	}
+  if ( stuple_stack.empty() ) {
+    printf( "};\n" );
+  }
 }
 
 // Draw an epsilon on the parse tree hanging off of the top of stack
 void parsetree_t::drawepsilon()
 {
-	push(epsilon);
-	pop();
+  push(epsilon);
+  pop();
 }
 
 // This private print function is called from push. Basically it
@@ -294,39 +294,39 @@ void parsetree_t::drawepsilon()
 // then it makes it a snazzy blue color so you can see your program on the leaves
 void parsetree_t::printedge(stuple temp)
 {
-	if ( temp.stype == TERMINAL ) {
-		printf("\t\"%s%d\" [label=\"%s\",style=filled,fillcolor=powderblue]\n",
-		  stuple_to_string(temp),
-		  temp.uniq,
-		  stuple_to_string(temp));
-	} else {
-		printf("\t\"%s%d\" [label=\"%s\"]\n",
-		  stuple_to_string(temp),
-		  temp.uniq,
-		  stuple_to_string(temp));
-	}
+  if ( temp.stype == TERMINAL ) {
+    printf("\t\"%s%d\" [label=\"%s\",style=filled,fillcolor=powderblue]\n",
+        stuple_to_string(temp),
+        temp.uniq,
+        stuple_to_string(temp));
+  } else {
+    printf("\t\"%s%d\" [label=\"%s\"]\n",
+        stuple_to_string(temp),
+        temp.uniq,
+        stuple_to_string(temp));
+  }
 
-	//no edge to print if this is the first node
-	if ( !stuple_stack.empty() ) {
-		//print the edge
-		printf( "\t\"%s%d\" ", stuple_to_string(stuple_stack.top()), stuple_stack.top().uniq );
-		printf( "-> \"%s%d\"\n", stuple_to_string(temp), temp.uniq );
-	}
+  //no edge to print if this is the first node
+  if ( !stuple_stack.empty() ) {
+    //print the edge
+    printf( "\t\"%s%d\" ", stuple_to_string(stuple_stack.top()), stuple_stack.top().uniq );
+    printf( "-> \"%s%d\"\n", stuple_to_string(temp), temp.uniq );
+  }
 }
 
 // just a private utility for helping with the printing of the dot stuff
 char* parsetree_t::stuple_to_string(const stuple& s)
 {
-	static char buffer[MAX_SYMBOL_NAME_SIZE];
-	if ( s.stype == TERMINAL ) {
-		snprintf( buffer, MAX_SYMBOL_NAME_SIZE, "%s", token_to_string(s.t) );
-	} else if ( s.stype == NONTERMINAL ) {
-		snprintf( buffer, MAX_SYMBOL_NAME_SIZE, "%s", nonterm_to_string(s.nt) );
-	} else {
-		assert(0);
-	}
+  static char buffer[MAX_SYMBOL_NAME_SIZE];
+  if ( s.stype == TERMINAL ) {
+    snprintf( buffer, MAX_SYMBOL_NAME_SIZE, "%s", token_to_string(s.t) );
+  } else if ( s.stype == NONTERMINAL ) {
+    snprintf( buffer, MAX_SYMBOL_NAME_SIZE, "%s", nonterm_to_string(s.nt) );
+  } else {
+    assert(0);
+  }
 
-	return buffer;
+  return buffer;
 }
 
 
@@ -342,18 +342,18 @@ char* parsetree_t::stuple_to_string(const stuple& s)
 
 class parser_t {
   private:
-	scanner_t scanner;
-	parsetree_t parsetree;
-	void eat_token(token_type t);
-	void syntax_error(nonterm_type);
-	void div_by_zero_error();
+    scanner_t scanner;
+    parsetree_t parsetree;
+    void eat_token(token_type t);
+    void syntax_error(nonterm_type);
+    void div_by_zero_error();
 
-	void List();
-	// WRITEME: fill this out with the rest of the
-	// recursive decent stuff (more methods)
+    void List();
+    // WRITEME: fill this out with the rest of the
+    // recursive decent stuff (more methods)
 
   public:
-	void parse();
+    void parse();
 };
 
 
@@ -362,9 +362,9 @@ class parser_t {
 // properly by calling push and pop.
 void parser_t::eat_token(token_type t)
 {
-	parsetree.push(t);
-	scanner.eat_token(t);
-	parsetree.pop();
+  parsetree.push(t);
+  scanner.eat_token(t);
+  parsetree.pop();
 }
 
 // Call this syntax error when you are trying to parse the
@@ -373,11 +373,11 @@ void parser_t::eat_token(token_type t)
 // there is a syntax_error.
 void parser_t::syntax_error(nonterm_type nt)
 {
-	printf("syntax error: found %s in parsing %s - line %d\n",
-		token_to_string( scanner.next_token()),
-		nonterm_to_string(nt),
-		scanner.get_line() );
-	exit(1);
+  printf("syntax error: found %s in parsing %s - line %d\n",
+      token_to_string( scanner.next_token()),
+      nonterm_to_string(nt),
+      scanner.get_line() );
+  exit(1);
 }
 
 // throw a div by zero error, call this function when you detect
@@ -385,8 +385,8 @@ void parser_t::syntax_error(nonterm_type nt)
 // expressions for extra credit)
 void parser_t::div_by_zero_error()
 {
-        printf("div by zero error: line %d\n", scanner.get_line() );
-        exit(0);
+  printf("div by zero error: line %d\n", scanner.get_line() );
+  exit(0);
 }
 
 
@@ -395,7 +395,7 @@ void parser_t::div_by_zero_error()
 // symbol
 void parser_t::parse()
 {
-	List();
+  List();
 }
 
 
@@ -408,29 +408,29 @@ void parser_t::parse()
 //Here is an example
 void parser_t::List()
 {
-	//push this non-terminal onto the parse tree.
-	//the parsetree class is just for drawing the finished
-	//parse tree, and should in should have no effect the actual
-	//parsing of the data
-	parsetree.push(NT_List);
+  //push this non-terminal onto the parse tree.
+  //the parsetree class is just for drawing the finished
+  //parse tree, and should in should have no effect the actual
+  //parsing of the data
+  parsetree.push(NT_List);
 
-	switch( scanner.next_token() )
-	{
-		case T_plus:
-			eat_token(T_plus);
-			List();
-			break;
-		case T_eof:
-			parsetree.drawepsilon();
-			break;
-		default:
-			syntax_error(NT_List);
-			break;
-	}
+  switch( scanner.next_token() )
+  {
+    case T_plus:
+      eat_token(T_plus);
+      List();
+      break;
+    case T_eof:
+      parsetree.drawepsilon();
+      break;
+    default:
+      syntax_error(NT_List);
+      break;
+  }
 
-	//now that we are done with List, we can pop it from the data
-	//stucture that is tracking it for drawing the parse tree
-	parsetree.pop();
+  //now that we are done with List, we can pop it from the data
+  //stucture that is tracking it for drawing the parse tree
+  parsetree.pop();
 }
 
 // WRITEME: you will need to put the rest of the procedures here
