@@ -17,11 +17,17 @@ RelExpr : Expr '<' Expr
         | Expr '=' Expr
         | Expr
 
-Expr    : Expr '*' Expr 
-        | Expr '/' Expr
-        | Expr '+' Expr 
-        | Expr '-' Expr
-        | 'n'
+Expr    : Expr '+' Term
+        | Expr '-' Term
+        | Term
+        ;
+
+Term    : Term '*' Factor
+        | Term '/' Factor
+        | Factor
+        ;
+
+Factor  : 'n'
         | '(' Expr ')'
         ;
 
