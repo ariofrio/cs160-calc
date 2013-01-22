@@ -12,19 +12,29 @@ List    : List RelExpr ';' {printf("parsed expresion\n");}
         | RelExpr ';' {printf("parsed expresion\n");}
         ;
 
-RelExpr : Expr '<' Expr
-        | Expr '>' Expr
-        | Expr '=' Expr
-        | Expr
-
-Expr    : Expr '+' Term
-        | Expr '-' Term
-        | Term
+RelExpr : Expr RelExpr2
         ;
 
-Term    : Term '*' Factor
-        | Term '/' Factor
-        | Factor
+RelExpr2: /* empty */
+        | '<' Expr
+        | '>' Expr
+        | '=' Expr
+        ;
+
+Expr    : Term Expr2
+        ;
+
+Expr2   : /* empty */
+        | '+' Expr
+        | '-' Expr
+        ;
+
+Term    : Factor Term2
+        ;
+
+Term2   : /* empty */
+        | '*' Term
+        | '/' Term
         ;
 
 Factor  : 'n'
