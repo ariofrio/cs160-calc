@@ -2,19 +2,27 @@
 
 **Scanner implemented**: Jan 13
 
-   - Add `-std=gnu++11` flag to Makefile for better code
-   - `next_token()` only fetches another token when `peek_token_available` is
-     false, storing the token in `peek_token` and setting
-     `peek_token_available` to true.
-   - `eat_token()` sets `peek_token_available` to false.
-   - `next_token()` fetches another token by reading a character from stdin
-     and comparing. For numbers, it reads characters from stdin until too large
-     (calling `scan_error()`) or it finds a non-digit, and calling
-     `cin.unget()`.
-   - `get_line()` returns the member `line_no` which is incremented every time
-     a new line character is found.
+ - Add `-std=gnu++11` flag to Makefile for better code
+ - `next_token()` only fetches another token when `peek_token_available` is
+   false, storing the token in `peek_token` and setting
+   `peek_token_available` to true.
+ - `eat_token()` sets `peek_token_available` to false.
+ - `next_token()` fetches another token by reading a character from stdin
+   and comparing. For numbers, it reads characters from stdin until too large
+   (calling `scan_error()`) or it finds a non-digit, and calling
+   `cin.unget()`.
+ - `get_line()` returns the member `line_no` which is incremented every time
+   a new line character is found.
 
 Updated main function per email from baki: Jan 13
+
+**Grammar modification**: Jan 21
+
+ - Add more test cases and write a test case generator
+ - Make the YACC grammar handle precedence by adding a `Term` non-terminal
+ - Make the YACC grammar unambiguous by recursing only on one side
+ - Make the YACC grammar an LL(1) grammar by removing left-recursion and
+   left-factoring
 
 TODO: Summarize more commits here.
 
