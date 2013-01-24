@@ -8,8 +8,11 @@
 
 %%
 
-List    : List RelExpr ';' {printf("parsed expresion\n");}
-        | RelExpr ';' {printf("parsed expresion\n");}
+List    : RelExpr ';' List2 {printf("parsed expression\n");}
+        ;
+
+List2   : /* empty */
+        | List
         ;
 
 RelExpr : Expr RelExpr2
