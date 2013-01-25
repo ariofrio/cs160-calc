@@ -435,9 +435,6 @@ void parser_t::List() {
       eat_token(T_semicolon);
       ListP();
       break;
-    case T_eof:
-      parsetree.drawepsilon();
-      break;
     default:
       syntax_error(NT_List);
       break;
