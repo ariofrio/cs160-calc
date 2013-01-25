@@ -2,6 +2,11 @@
 
 TODO: Summarize more commits here.
 
+**Parser implemented**: Jan 24
+
+ - `List()` changed to reflect my grammar
+ - Implemented using recursive descent technique.
+
 **Grammar modification**: Jan 21
 
  - Add more test cases and write a test case generator
